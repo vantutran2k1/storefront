@@ -17,8 +17,11 @@ django-cors-headers = "*"
 redis = "*"
 celery = "*"
 flower = "*"
+pytest-django = "*"
 
 [dev-packages]
+pytest = "*"
+pytest-watch = "*"
 
 [requires]
 python_version = "3.11"
