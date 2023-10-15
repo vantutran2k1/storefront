@@ -9,12 +9,12 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from .filters import ProductFilter
-from .models import Product, Collection, OrderItem, Review, Cart, CartItem, Customer, Order
+from .models import Product, Collection, OrderItem, Review, Cart, CartItem, Customer, Order, ProductImage
 from .pagination import DefaultPagination
 from .permissions import IsAdminOrReadOnly, ViewCustomerHistoryPermission
 from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, \
 	AddCartItemSerializer, UpdateCartItemSerializer, CustomerSerializer, OrderSerializer, CreateOrderSerializer, \
-	UpdateOrderSerializer
+	UpdateOrderSerializer, ProductImageSerializer
 
 
 class ProductViewSet(ModelViewSet):
@@ -149,3 +149,13 @@ class OrderViewSet(ModelViewSet):
 		serializer = OrderSerializer(order)
 
 		return Response(serializer.data)
+
+
+class ProductImageViewSet(ModelViewSet):
+	serializer_class = ProductImageSerializer
+
+	def get_queryset(self):
+		return ProductImage.objects.filter(product_id=self.kwargs["product_pk"])
+
+	def get_serializer_context(self):
+		return {"product_id": self.kwargs["product_pk"]}
