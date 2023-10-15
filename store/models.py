@@ -5,6 +5,8 @@ from django.contrib import admin
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from .validators import validate_file_size
+
 
 # Create your models here.
 class Promotion(models.Model):
@@ -46,7 +48,7 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
 	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
-	image = models.ImageField(upload_to="store/images")
+	image = models.ImageField(upload_to="store/images", validators=[validate_file_size])
 
 
 class Customer(models.Model):
