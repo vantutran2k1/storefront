@@ -18,6 +18,7 @@ redis = "*"
 celery = "*"
 flower = "*"
 pytest-django = "*"
+django-redis = "*"
 
 [dev-packages]
 pytest = "*"
