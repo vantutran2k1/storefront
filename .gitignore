@@ -161,3 +161,4 @@ cython_debug/
 media/store/images/*.png
 media/store/images/*.jpeg
 media/store/images/*.jpg
+/static/
