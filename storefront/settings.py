@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 	'corsheaders',
 	'rest_framework',
 	'djoser',
+	'silk',
 	'debug_toolbar',
 	'store',
 	'tags',
@@ -58,6 +59,9 @@ MIDDLEWARE = [
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if DEBUG:
+	MIDDLEWARE += ['silk.middleware.SilkyMiddleware']
 
 ROOT_URLCONF = 'storefront.urls'
 
