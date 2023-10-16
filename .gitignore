@@ -162,3 +162,4 @@ media/store/images/*.png
 media/store/images/*.jpeg
 media/store/images/*.jpg
 /static/
+general.log
