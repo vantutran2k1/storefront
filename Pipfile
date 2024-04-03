@@ -9,6 +9,7 @@ django-debug-toolbar = "*"
 mysqlclient = "*"
 django-rest-framework = "*"
 drf-nested-routers = "*"
+django-filter = "*"
 
 [dev-packages]
 
