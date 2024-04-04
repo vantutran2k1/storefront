@@ -5,9 +5,8 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('store', '0010_alter_related_name_and_create_unique_constraint_in_cart_item'),
+        ('store', '0009_alter_related_name_and_create_unique_constraint_in_cart_item'),
     ]
 
     operations = [

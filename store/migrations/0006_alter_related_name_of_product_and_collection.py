@@ -5,20 +5,21 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('store', '0006_add_validation_to_store_models'),
+        ('store', '0005_add_validation_to_store_models'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='orderitem',
             name='product',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='orderitems', to='store.product'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='orderitems',
+                                    to='store.product'),
         ),
         migrations.AlterField(
             model_name='product',
             name='collection',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='products', to='store.collection'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='products',
+                                    to='store.collection'),
         ),
     ]
