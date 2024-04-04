@@ -7,9 +7,10 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from store.filters import ProductFilter
-from store.models import Product, Collection, OrderItem, Review, Cart
+from store.models import Product, Collection, OrderItem, Review, Cart, CartItem
 from store.pagination import DefaultPagination
-from store.serializers import ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer
+from store.serializers import ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, \
+    CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
 
 
 class ProductViewSet(ModelViewSet):
@@ -65,3 +66,21 @@ class CartViewSet(
 ):
     queryset = Cart.objects.prefetch_related('items__product').all()
     serializer_class = CartSerializer
+
+
+class CartItemViewSet(ModelViewSet):
+    http_method_names = ['get', 'post', 'patch', 'delete']
+
+    def get_queryset(self):
+        return CartItem.objects.filter(cart_id=self.kwargs['cart_pk']).select_related('product')
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return AddCartItemSerializer
+        if self.request.method == 'PATCH':
+            return UpdateCartItemSerializer
+
+        return CartItemSerializer
+
+    def get_serializer_context(self):
+        return {'cart_id': self.kwargs['cart_pk']}
