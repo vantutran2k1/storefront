@@ -5,6 +5,7 @@ from django.utils.html import format_html
 from django.utils.http import urlencode
 
 from store import models
+from store.models import Product, Customer, Collection
 
 INVENTORY_THRESHOLD = 10
 LOW = 'Low'
@@ -46,11 +47,11 @@ class ProductAdmin(admin.ModelAdmin):
     list_select_related = ['collection']
     search_fields = ['title']
 
-    def collection_title(self, product):
+    def collection_title(self, product: Product):
         return product.collection.title
 
     @admin.display(ordering='inventory')
-    def inventory_status(self, product):
+    def inventory_status(self, product: Product):
         if product.inventory < INVENTORY_THRESHOLD:
             return LOW
         return OK
@@ -75,7 +76,7 @@ class CustomerAdmin(admin.ModelAdmin):
     search_fields = ['first_name__istartswith', 'last_name__istartswith']
 
     @admin.display(ordering='orders_count')
-    def orders_count(self, customer):
+    def orders_count(self, customer: Customer):
         url = (
                 reverse('admin:store_order_changelist')
                 + '?'
@@ -93,7 +94,7 @@ class CollectionAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
     @admin.display(ordering='products_count')
-    def products_count(self, collection):
+    def products_count(self, collection: Collection):
         url = (
                 reverse('admin:store_product_changelist')
                 + '?'
