@@ -9,16 +9,16 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from store.filters import ProductFilter
-from store.models import Product, Collection, OrderItem, Review, Cart, CartItem, Customer, Order
+from store.models import Product, Collection, OrderItem, Review, Cart, CartItem, Customer, Order, ProductImage
 from store.pagination import DefaultPagination
 from store.permissions import IsAdminOrReadOnly, ViewCustomerHistoryPermission
 from store.serializers import ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, \
     CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer, CustomerSerializer, OrderSerializer, \
-    CreateOrderSerializer, UpdateOrderSerializer
+    CreateOrderSerializer, UpdateOrderSerializer, ProductImageSerializer
 
 
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.prefetch_related('images').all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = ProductFilter
@@ -148,3 +148,13 @@ class OrderViewSet(ModelViewSet):
         if self.request.method in ['PATCH', 'DELETE']:
             return [IsAdminUser()]
         return [IsAuthenticated()]
+
+
+class ProductImageViewSet(ModelViewSet):
+    serializer_class = ProductImageSerializer
+
+    def get_serializer_context(self):
+        return {'product_id': self.kwargs['product_pk']}
+
+    def get_queryset(self):
+        return ProductImage.objects.filter(product_id=self.kwargs['product_pk'])
