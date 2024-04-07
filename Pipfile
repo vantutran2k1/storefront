@@ -16,6 +16,8 @@ pillow = "*"
 redis = "*"
 celery = "*"
 gunicorn = "*"
+dj-database-url = "*"
+django-silk = "*"
 
 [dev-packages]
 pytest = "*"
